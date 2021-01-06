@@ -1,58 +1,58 @@
 #!/bin/bash
 
 function load_info() {
-    read -p "Ile znaków ma zawierać hasło: " characters_amount
-    read -p "Ile propozycji haseł mam wyświetlić: " passwords_number
+    read -p "Password length: " characters_amount
+    read -p "Number of passwords: " passwords_number
 }
 
 function show_menu() {
-    echo "Jaki typ hasła mam wygenerować?"
-    options="\"Hasło z małymi literami\" \"Hasło z wielkimi literami\" \"Hasło z wielkimi, małymi literami oraz cyframi\" \"Hasło z wielkimi i małymi literami, cyframi oraz znakami specjalnymi\" \"Wyjście\""
-    PS3='Wybierz opcję: '
+    echo "What type of password should I generate?"
+    options="\"Lower case only\" \"Upper and lower case only\" \"Upper, lower case and numbers\" \"Upper, lower case, numbers and special characters\" \"Quit\""
+    PS3='Choose an option: '
 
     eval set $options
 
     select option in "$@"
     do
         case "$option" in
-            "Hasło z małymi literami")
+            "Lower case only")
                 load_info
                 echo ""
-                echo "Oto propozycje haseł:"
+                echo "Passwords:"
                 cat /dev/urandom | tr -dc 'a-z' | fold -w $characters_amount | head -n $passwords_number
                 echo ""
                 show_menu
                 ;;
-            "Hasło z wielkimi literami")
+            "Upper and lower case only")
                 load_info
                 echo ""
-                echo "Oto propozycje haseł:"
+                echo "Passwords:"
                 cat /dev/urandom | tr -dc 'a-zA-Z' | fold -w $characters_amount | head -n $passwords_number
                 echo ""
                 show_menu
                 ;;
-            "Hasło z wielkimi, małymi literami oraz cyframi")
+            "Upper, lower case and numbers")
                 load_info
                 echo ""
-                echo "Oto propozycje haseł:"
+                echo "Passwords:"
                 cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $characters_amount | head -n $passwords_number
                 echo ""
                 show_menu
                 ;;
-            "Hasło z wielkimi i małymi literami, cyframi oraz znakami specjalnymi")
+            "Upper, lower case, numbers and special characters")
                 load_info
                 echo ""
-                echo "Oto propozycje haseł:"
+                echo "Passwords:"
                 cat /dev/urandom | tr -dc 'a-zA-Z0-9!@#$%^&*()_+' | fold -w $characters_amount | head -n $passwords_number
                 echo ""
                 show_menu
                 ;;
-            "Wyjście")
-                echo "Dzięki za skorzystanie ze skryptu!"
+            "Quit")
+                echo "Thank you for using the script!"
                 exit 0
                 ;;
             *)
-                echo "Wybrano złą opcję. Wybierz spośród poniższych:"
+                echo "Wrong option! You can choose:"
                 show_menu
                 ;;
         esac
